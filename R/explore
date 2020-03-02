@@ -1,0 +1,18 @@
+count_values = function(x, useNA = c("no", "ifany", "always")){
+  if (useNA != 'no') {
+    NA_count = sum(is.na(x))
+    NA_count = setNames(NA_count, nm = 'NA') 
+  }
+  if ((useNA == 'no') | (useNA == "ifany" & NA_count == 0)) {
+    NA_count = NULL
+  }
+  return(c(tapply(x, x, length), NA_count))
+}
+
+explore = function(df) {
+  isNumCol = vapply(df, is.numeric, logical(1))
+  return(c(
+    lapply(df[isNumCol], summary),
+    lapply(df[!isNumCol], function(col) head(sort(count_values(col, useNA = 'ifany'), decreasing = TRUE)))
+  ))
+}
