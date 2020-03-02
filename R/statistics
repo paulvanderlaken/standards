@@ -1,0 +1,17 @@
+linear_map <- function(x, from, to){
+  return((x - min(x)) / max(x - min(x)) * (to - from) + from)
+}
+
+modal_value <- function(v) {
+   uq <- unique(v)
+   return(uq[which.max(tabulate(match(v, uq)))])
+}
+
+se_binary = function(p, n){
+  return(sqrt((p * (1 - p)) / n))
+}
+
+logit2prob <- function(logit){
+  odds <- exp(logit)
+  return(odds / (1 + odds))
+}
