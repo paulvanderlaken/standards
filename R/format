@@ -1,0 +1,15 @@
+percent <- function(x, digits = 2, format = "f", ...) {
+  return(paste0(formatC(100 * x, format = format, digits = digits, ...), "%"))
+}
+
+euro <- function(x, digits = 2, format = "f", ...) {
+  return(paste0('€', formatC(x, format = format, digits = digits, ...)))
+}
+
+thousands = function(x, prefix = '€', suffix = 'k', digits = 0, format = "f", ...) {
+  return(paste0(prefix, formatC(x / 1e3, format = format, digits = digits, ...), suffix))
+}
+
+millions = function(x, prefix = '€', suffix = 'm', digits = 0, format = "f", ...) {
+  return(paste0(prefix, formatC(x / 1e6, format = format, digits = digits, ...), suffix))
+}
