@@ -1,0 +1,23 @@
+bootstrap_binary = function(numerator, denominator, times=100000, seed=1) {
+  set.seed(seed)
+  return(rbinom(n = times, size = denominator, prob = numerator / denominator))
+}
+
+bootstrap_binary_perc = function(numerator, denominator, ...) {
+  return(bootstrap_binary(numerator, denominator, ...) / denominator)
+}
+
+empirical_se = function(..., probs = c(0.05, 0.95)){
+  return(quantile(bootstrap_binary_perc(...), probs = probs))
+} 
+
+retrieve_bounds = function(numerators, denominators, index = 1){
+  output = rep(NA, length = length(numerators))
+  for (i in seq_along(output)) {
+    output[i] = empirical_se(numerators[i], denominators[i])[index]
+  }
+  return(output)
+}
+
+retrieve_lb = function(...) retrieve_bounds(..., index = 1)
+retrieve_ub = function(...) retrieve_bounds(..., index = 2)
